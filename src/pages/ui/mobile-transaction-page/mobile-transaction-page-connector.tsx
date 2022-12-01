@@ -9,7 +9,6 @@ import { View } from 'react-native'
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { PaymentCategoriesStackParamsList } from '@features/app-navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { AlertPopUp } from '@shared/ui/core/molecules/alert-pop-up/alert-pop-up';
 import { DetailsComponent } from '@shared/ui/core/molecules/details-component/details-component';
 import { SimpleLineIcons } from '@expo/vector-icons';
 import { addSnek } from '@entities/sneks';
@@ -25,7 +24,7 @@ type ProvidersScreenProps = NativeStackNavigationProp<PaymentCategoriesStackPara
 export const MobileTransactionPageConnector = () => {
   const route = useRoute<RouteProp<PaymentCategoriesStackParamsList, 'MobileTransaction'>>()
   const navigation = useNavigation<ProvidersScreenProps>()
-  const { service_id, service_icon, service_name } = route.params
+  const { service_icon, service_name } = route.params
   const [transactionInfo, setTransactionInfo] = useState<TMobileTransactionModel>({
     phoneNumber: '',
     transactionValue: '0 ₽',
@@ -163,10 +162,10 @@ export const MobileTransactionPageConnector = () => {
             },
           ]}
           underlineColor={isChipsInputFocus
-            ? '#6C78E6'
+            ? 'focused'
             : alarmText === alarmMessage.hugeTransactionValue || alarmText === alarmMessage.emptyFields
-              ? '#FB6176'
-              : '#403A47'
+              ? 'alarm'
+              : 'focused'
           }
         />}
       continueButton={<BigButton title='Продолжить' onPress={continueAction} />}

@@ -6,9 +6,11 @@ import { useEffect, useState } from 'react';
 import { Keyboard } from 'react-native'
 import { useStore } from 'effector-react';
 import { TServiceItem } from '@widgets/services-list';
-import { $servicesList, getMobileServicesFX, setServicesSearch, updateServicesFX } from '@features/services';
+import { $servicesList, setServicesList, setServicesSearch, } from '@features/services';
 import { ServicesScreen } from './services-page';
 import { useTheme } from 'styled-components';
+import { useGetMobileServices } from '@features/services/model/hooks/get-mobile-services';
+import { addSnek } from '@entities/sneks';
 
 type ProvidersScreenProps = CompositeNavigationProp<
   BottomTabNavigationProp<AppTabsParamsList, 'paymentScreen'>,
@@ -18,6 +20,7 @@ type ProvidersScreenProps = CompositeNavigationProp<
 export const ServicesPageConnector = () => {
   const navigation = useNavigation<ProvidersScreenProps>()
   const { palette } = useTheme()
+  const { data, isSuccess, isLoading, isError } = useGetMobileServices()
   const { filteredList } = useStore($servicesList)
   const mappedServicesList: TServiceItem[] = filteredList.map(service => ({
     ...service,
@@ -33,7 +36,21 @@ export const ServicesPageConnector = () => {
   const [isRefreshing, setIsRefreshing] = useState<boolean>(false);
 
   useEffect(() => {
-    getMobileServicesFX()
+    if (isSuccess) {
+      setServicesList(data)
+    }
+    if (isError) {
+      addSnek({
+        id: Date.now(),
+        type: 'alarm',
+        title: 'Что-то пошло не так',
+        timer: 5000
+      })
+    }
+  }, [data, isSuccess, isError])
+
+  // Взаимодействие с навигацией
+  useEffect(() => {
     const focus = navigation.addListener('focus', () => {
       navigation.getParent()?.setOptions({
         tabBarStyle: {
@@ -79,9 +96,9 @@ export const ServicesPageConnector = () => {
         headerShown: true
       })}
       onRefresh={() => {
-        updateServicesFX();
         setIsRefreshing(false)
       }}
+      isLoading={isLoading}
       refreshing={isRefreshing}
     />
   );

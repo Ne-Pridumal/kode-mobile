@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@shared/ui/theme'
+import { styled, Theme } from '@shared/ui/theme'
 import { View, TextInputProps } from 'react-native'
 import { UnderlineInput } from '../../molecules';
 import { ChipsList } from '../chips-list';
@@ -10,6 +10,7 @@ const Wrapper = styled(View)`
 const Gap = styled(View)`
   height: 8px;
 `
+
 const Text = styled(Typography)`
   color: ${({ theme }) => theme.palette.text.secondary};
 `
@@ -19,13 +20,13 @@ export type TChipsInput = TextInputProps & {
   showCashback: boolean
   cashback?: number,
   cashbackPercent?: number,
-  underlineColor: string,
+  underlineColor: 'alarm' | 'focused',
 }
 
 export const ChipsInput = ({ underlineColor, list, cashback = 0, cashbackPercent = 0, showCashback, ...inputProps }: TChipsInput) => {
   return (
     <Wrapper>
-      <UnderlineInput keyboardType='number-pad' color={underlineColor} {...inputProps} />
+      <UnderlineInput keyboardType='number-pad' underlineColor={underlineColor} {...inputProps} />
       <Gap />
       {showCashback ?
         <Text variant='caption1'>

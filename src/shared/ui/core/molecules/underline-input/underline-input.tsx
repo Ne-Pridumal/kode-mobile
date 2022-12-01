@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from '@shared/ui/theme'
+import { styled, Theme } from '@shared/ui/theme'
 import { TextInput, TextInputProps, View } from 'react-native';
 
 const Wrapper = styled(View)`
@@ -17,24 +17,32 @@ const BigInput = styled(TextInput)`
   letter-spacing: ${({ theme }) => theme.typography.title.letterSpacing};
   color: ${({ theme }) => theme.palette.text.primary};
 `
+type TLine = {
+  theme: Theme,
+  underlineColor: 'alarm' | 'focused',
+}
 
-const Line = styled(View)`
+const Line = styled(View)<TLine>`
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 1px;
+  background: ${({ theme, underlineColor }: TLine) => (
+    underlineColor === 'alarm' 
+    ? theme.palette.text.secondary
+    : theme.palette.accent.primary)};
 `
 
 
 export type TUnderlineInput = TextInputProps & {
-  color: string
+  underlineColor: 'alarm' | 'focused',
 }
 
-export const UnderlineInput = ({ color, value, ...inputProps }: TUnderlineInput) => {
+export const UnderlineInput = ({ underlineColor, value, ...inputProps }: TUnderlineInput) => {
   return (
     <Wrapper>
       <BigInput value={value} {...inputProps} />
-      <Line style={{ backgroundColor: color }} />
+      <Line underlineColor={underlineColor} />
     </Wrapper>
   );
 };

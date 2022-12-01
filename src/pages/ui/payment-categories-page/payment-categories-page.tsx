@@ -4,11 +4,12 @@ import { PaymentCategoriesPage } from '@shared/ui/core/pages';
 import { CategoriesList, TCategoriesList } from '@widgets/cateroies-list/ui/categories-list';
 
 type TPaymentCategoriesScreen = TCategoriesList & {
+  isLoading: boolean
 }
 
 
-export const PaymentCategoriesScreen = ({ items }: TPaymentCategoriesScreen) => {
-  if (items.length === 0) {
+export const PaymentCategoriesScreen = ({ items, isLoading }: TPaymentCategoriesScreen) => {
+  if (isLoading) {
     return (
       <PaymentCategoriesPage
         title={<BigTitleSkeleton width={173} height={34} marginTop={3} marginBottom={1} />}
