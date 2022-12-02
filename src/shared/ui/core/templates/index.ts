@@ -2,3 +2,4 @@ export { PaymentCategoriesPageTemplate } from './payment-categories-page-templat
 export { OnlyTitlePageTemplate } from './only-title-page-template'
 export { ListSearchTemplate } from './list-search-template'
 export { TransactionTemplate } from './transaction-template'
+export { CustomKeyboardTemplate } from './custom-keyboard-template'

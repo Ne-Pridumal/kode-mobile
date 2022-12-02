@@ -9,13 +9,6 @@ type TKeyboardArray = Array<Array<{
   char: ReactNode
 }>>
 
-export type TCustomKeyboard = {
-  onPressNumber: (e: GestureResponderEvent) => void,
-  keyboardChangeAction: Dispatch<SetStateAction<string>>,
-  type: 'numeric' | 'custom-numeric' | 'custom-keyboard'
-  keyboardArray?: TKeyboardArray
-}
-
 const Wrapper = styled(View)`
   background: ${({ theme }) => theme.palette.background.primary};
   padding: 14px 16px;
@@ -60,14 +53,26 @@ const numericArrary = [
   ['Отмена', 0, DelIcon]
 ]
 
-export const CustomKeyboard = ({ onPressNumber, keyboardChangeAction, type }: TCustomKeyboard) => {
+export type TCustomKeyboard = {
+  onPressNumber?: (e: GestureResponderEvent) => void,
+  keyboardChangeEffect: Dispatch<SetStateAction<string>>,
+  type: 'numeric' | 'custom-numeric' | 'custom-keyboard'
+  keyboardArray?: TKeyboardArray,
+  customButtonAction: () => void
+  customButtonContent?: string
+}
+
+export const CustomKeyboard = ({ onPressNumber, keyboardChangeEffect, customButtonAction, customButtonContent }: TCustomKeyboard) => {
   const { width } = useWindowDimensions()
   const [value, setValue] = useState('')
   const addKeyAction = (e: GestureResponderEvent, key: unknown) => {
     e.preventDefault()
     const keyType = typeof key
     if (keyType === 'number' || keyType === 'string') {
-      keyboardChangeAction(state => `${state}${key}`)
+      keyboardChangeEffect(state => state + `${key}`)
+    }
+    if (key === DelIcon) {
+      keyboardChangeEffect((state) => state.slice(0, -1))
     }
   }
   return (
@@ -80,18 +85,26 @@ export const CustomKeyboard = ({ onPressNumber, keyboardChangeAction, type }: TC
               height={68}
               width={width / 3 - 32}
               key={`${rowIndex}${keyIndex}`}
-              onPress={(e) => { addKeyAction(e, key) }}
+              onPress={(e) => {
+                `${rowIndex}${keyIndex}` !== '30'
+                  ? addKeyAction(e, key)
+                  : customButtonAction()
+              }}
             >
-              {typeof key === 'number' || typeof key === 'string'
-                ?
-                (
-                  <KeyText variant={`${rowIndex}${keyIndex}` !== '30' ? 'largeTitle' : 'caption1'}> {/* поправить потом */}
-                    {key}
-                  </KeyText>
-                )
-                :
-                (key)
-              }
+              <Key>
+                {typeof key === 'number' || typeof key === 'string'
+                  ?
+                  (
+                    <KeyText variant={`${rowIndex}${keyIndex}` !== '30' ? 'largeTitle' : 'caption1'}> {/* поправить потом */}
+                      {`${rowIndex}${keyIndex}` !== '30'
+                        ? key
+                        : customButtonContent ?? key}
+                    </KeyText>
+                  )
+                  :
+                  (key)
+                }
+              </Key>
             </KeyWrapper>
           ))}
         </RowWrapper>

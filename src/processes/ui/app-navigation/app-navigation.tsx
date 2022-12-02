@@ -4,7 +4,7 @@ import { MainTab } from '@features/app-navigation/app-navigation';
 import { PaymentCategoriesNavigation } from '../payment-categories-navigation/payment-categories-navigation';
 import { OnlyTitleScreen } from '@pages/ui/only-title-page';
 import { useTheme } from 'styled-components';
-import { CustomKeyboardPageConnector } from '@pages/ui/custom-keyboard-page';
+import { OTPPageConnector, PhoneNumberPageConnector } from '@pages/ui';
 
 export const AppNavigation = () => {
   const { palette } = useTheme()
@@ -27,7 +27,7 @@ export const AppNavigation = () => {
 
       <MainTab.Screen
         name='mainScreen'
-        component={CustomKeyboardPageConnector}
+        component={OTPPageConnector}
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (

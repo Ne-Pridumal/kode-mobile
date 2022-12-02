@@ -2,7 +2,6 @@ import React from 'react';
 import { styled } from '@shared/ui/theme'
 import { TouchableOpacity, GestureResponderEvent } from 'react-native';
 import { Typography } from '../typography';
-import { theme } from '@storybook/react-native/dist/preview/components/Shared/theme';
 
 const ButtonContainer = styled(TouchableOpacity)`
   width: 100%;
@@ -10,11 +9,10 @@ const ButtonContainer = styled(TouchableOpacity)`
   min-height: 52px;
   justify-content: center;
   align-items: center;
-  background: #6C78E6;
-  border-radius: 26px;
+  background: ${({ theme }) => theme.palette.button.primary};
+  border-radius: 1000px;
 `
 const Text = styled(Typography)`
-  color: #FFFFFF;
 `
 
 export type TBigButton = {
@@ -24,7 +22,7 @@ type TBigButtonProps = TBigButton & {
   onPress?: (e: GestureResponderEvent) => void
 }
 
-export const BigButton: React.FC<TBigButtonProps> = ({ title, onPress }) => {
+export const BigButton = ({ title, onPress }: TBigButtonProps) => {
   return (
     <ButtonContainer activeOpacity={0.7} onPress={onPress}>
       <Text variant='button'>

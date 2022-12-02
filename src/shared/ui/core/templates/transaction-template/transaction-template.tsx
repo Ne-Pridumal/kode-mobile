@@ -52,7 +52,7 @@ const renderItem = ({ item }: { item: React.ReactNode }) => {
   }
   return null;
 }
-export const TransactionTemplate = ({ cardField, inputField, transactionValueField, periodField, meterValueField, continueButtonField, popUp }: TTransactionTemplate) => {
+export const TransactionTemplate = ({ cardField, inputField, transactionValueField, periodField, meterValueField, continueButtonField }: TTransactionTemplate) => {
   const { bottom, top } = useSafeAreaInsets();
   return (
     <Wrapper bottomInset={bottom} topInset={top}>
