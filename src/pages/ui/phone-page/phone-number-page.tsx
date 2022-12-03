@@ -13,6 +13,7 @@ const ContentWrapper = styled(View)`
   width: 100%;
   height: 100%;
   padding: 0 16px;
+  background: ${({theme}) => theme.palette.background.secondary};
 `
 
 const InputWrapper = styled(View)`

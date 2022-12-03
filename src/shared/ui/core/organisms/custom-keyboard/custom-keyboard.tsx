@@ -1,8 +1,8 @@
-import React, { Dispatch, ReactNode, SetStateAction, useState } from 'react';
-import { GestureResponderEvent, TouchableOpacity, useWindowDimensions, View } from 'react-native';
-import { styled, Theme } from '@shared/ui/theme'
+import React, { Dispatch, ReactNode, SetStateAction } from 'react';
+import { GestureResponderEvent, View } from 'react-native';
+import { styled, } from '@shared/ui/theme'
 import { Feather } from '@expo/vector-icons';
-import { Typography } from '@shared/ui/core/atoms';
+import { KeyboardKey } from './keyboard-key';
 
 type TKeyboardArray = Array<Array<{
   onPress?: () => void,
@@ -18,31 +18,6 @@ const RowWrapper = styled(View)`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-`
-
-type TKeyWrapper = {
-  theme: Theme
-  width: number,
-  height: number
-}
-
-const KeyWrapper = styled(TouchableOpacity) <TKeyWrapper>`
-  width: ${({ width }: TKeyWrapper) => width}px;
-  height: ${({ height }: TKeyWrapper) => height}px;
-  min-height: 68px;
-  min-width: 96px;
-  align-items: center;
-  justify-content: center;
-`
-const Key = styled(View)`
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  align-items: center;
-  justify-content: center;
-`
-const KeyText = styled(Typography)`
-  
 `
 
 const DelIcon = <Feather name="delete" size={24} color="white" />
@@ -62,11 +37,8 @@ export type TCustomKeyboard = {
   customButtonContent?: string
 }
 
-export const CustomKeyboard = ({ onPressNumber, keyboardChangeEffect, customButtonAction, customButtonContent }: TCustomKeyboard) => {
-  const { width } = useWindowDimensions()
-  const [value, setValue] = useState('')
-  const addKeyAction = (e: GestureResponderEvent, key: unknown) => {
-    e.preventDefault()
+const CustomKeyboardComponent = ({ onPressNumber, keyboardChangeEffect, customButtonAction, customButtonContent }: TCustomKeyboard) => {
+  const addKeyAction = (e: GestureResponderEvent, key: ReactNode) => {
     const keyType = typeof key
     if (keyType === 'number' || keyType === 'string') {
       keyboardChangeEffect(state => state + `${key}`)
@@ -79,36 +51,31 @@ export const CustomKeyboard = ({ onPressNumber, keyboardChangeEffect, customButt
     <Wrapper>
       {numericArrary.map((row, rowIndex) => (
         <RowWrapper key={rowIndex}>
-          {row.map((key, keyIndex) => (
-            <KeyWrapper
-              activeOpacity={0.7}
-              height={68}
-              width={width / 3 - 32}
+          {row.map((key: ReactNode, keyIndex) => (
+            <KeyboardKey
               key={`${rowIndex}${keyIndex}`}
-              onPress={(e) => {
-                `${rowIndex}${keyIndex}` !== '30'
-                  ? addKeyAction(e, key)
-                  : customButtonAction()
-              }}
-            >
-              <Key>
-                {typeof key === 'number' || typeof key === 'string'
-                  ?
-                  (
-                    <KeyText variant={`${rowIndex}${keyIndex}` !== '30' ? 'largeTitle' : 'caption1'}> {/* поправить потом */}
-                      {`${rowIndex}${keyIndex}` !== '30'
-                        ? key
-                        : customButtonContent ?? key}
-                    </KeyText>
-                  )
-                  :
-                  (key)
-                }
-              </Key>
-            </KeyWrapper>
+              keyAction={addKeyAction}
+              isCustomKey={`${rowIndex}${keyIndex}` === '30' ? true : false}
+              keyContent={
+              `${rowIndex}${keyIndex}` === '30' 
+                ? customButtonContent ? customButtonContent : key 
+                : key}
+              customKeyAction={customButtonAction}
+            />
           ))}
         </RowWrapper>
       ))}
     </Wrapper>
   );
 };
+
+const areEqual = (prevProps: TCustomKeyboard, nextProps: TCustomKeyboard) => {
+  if (prevProps.keyboardChangeEffect === nextProps.keyboardChangeEffect
+    || prevProps.customButtonAction === nextProps.customButtonAction
+    || prevProps.customButtonContent === nextProps.customButtonContent
+  ) {
+    return true
+  }
+  return false
+}
+export const CustomKeyboard = React.memo(CustomKeyboardComponent, areEqual)

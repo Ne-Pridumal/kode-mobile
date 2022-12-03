@@ -13,7 +13,6 @@ const ContentWrapper = styled(View)`
   flex: 1;
   width: 100%;
   position: relative;
-  background: ${({ theme }) => theme.palette.background.secondary}
   overflow: hidden;
 `
 

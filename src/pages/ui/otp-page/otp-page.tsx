@@ -3,6 +3,8 @@ import { OTPPage } from '@shared/ui/core/pages';
 import { styled } from '@shared/ui/theme'
 import { View } from 'react-native'
 import { Typography } from '@shared/ui/core/atoms';
+import {  ActivityIndicator } from 'react-native'
+import { useTheme } from 'styled-components';
 
 const OTPWrapper = styled(View)`
   width: 100%;
@@ -10,6 +12,7 @@ const OTPWrapper = styled(View)`
   padding: 0 16px;
   justify-content: center;
   align-items: center;
+  background: ${({ theme }) => theme.palette.background.primary};
 `
 const Text = styled(Typography)`
   width: 100%;
@@ -21,9 +24,18 @@ type TOTPScreen = {
   keyboardProps: TCustomKeyboard,
   inputProps: TOTPInput,
   isHideKeyboard: boolean,
+  isLoading: boolean
 }
 
-export const OTPScreen = ({ isHideKeyboard, inputProps, keyboardProps }: TOTPScreen) => {
+export const OTPScreen = ({ isHideKeyboard, inputProps, keyboardProps, isLoading }: TOTPScreen) => {
+  if(isLoading){
+    return (
+      <OTPWrapper>
+        <ActivityIndicator size='large' color='#ffffff'/>
+      </OTPWrapper>
+    )
+  }
+
   return (
     <OTPPage
       isHideKeyboard={isHideKeyboard}
