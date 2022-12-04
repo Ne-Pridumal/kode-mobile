@@ -1,8 +1,5 @@
-import { RootStackParamsList } from '@features/root-stack';
+import { RootStack } from '@features/root-stack';
 import { AppNavigation, AuthNavigation, PaymentCategoriesNavigation } from '@processes/ui';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-const RootStack = createNativeStackNavigator<RootStackParamsList>()
 
 export const RootStackProvider = () => {
   return (

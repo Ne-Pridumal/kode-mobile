@@ -35,7 +35,11 @@ export const PhoneNumberPageConnector = () => {
         phone: phone,
         otpCode: data.otpCode
       })
+
       navigation.navigate('OTP')
+    }
+    if (isError) {
+      navigation.navigate('Error')
     }
   }, [isError, isSuccess, data])
 

@@ -1,5 +1,6 @@
 import { TAlertPopUp } from "@shared/ui/core/molecules";
 import { createStore, createEvent } from "effector";
+import { useStore } from "effector-react";
 
 type TSnek = Omit<TAlertPopUp, 'closeAction'> & {
   id: number,
@@ -31,7 +32,7 @@ $sneksList.on(removeSnek, (state, payload) => (state.filter(snek => snek.id !== 
 
 addSnek.watch((snek) => {
   return setTimeout(() => {
-    const state = $sneksList.getState()
+    const state = useStore($sneksList)
     const snekIndex = state.find(sSnek => sSnek.id === snek.id)?.id
     if (snekIndex) {
       removeSnek({ id: snekIndex })

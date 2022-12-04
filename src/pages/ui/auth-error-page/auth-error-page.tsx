@@ -27,10 +27,14 @@ const CrossWrapper = styled(TouchableOpacity)`
 `
 const ImageWrapper = styled(View)`
   margin-bottom: ${({ theme }) => theme.spacing(4)}px;
-  min-width: 148px;
-  min-height: 148px;
+  width: 148px;
+  height: 148px;
   border-radius: 1000px;
   overflow: hidden;
+`
+const Img = styled(Image)`
+  width: 100%;
+  height: 100%;
 `
 const Title = styled(Typography)`
   text-align: center;
@@ -59,7 +63,7 @@ export const AuthErroPage = ({ buttonAction, crossAction }: TAuthPage) => {
           <AntDesign name="close" size={24} color="#ffffff" />
         </CrossWrapper>
         <ImageWrapper>
-          <Image
+          <Img
             source={require('./error-image.png')}
           />
         </ImageWrapper>

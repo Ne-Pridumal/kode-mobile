@@ -55,12 +55,12 @@ export const AppNavigation = () => {
       />
       <MainTab.Screen
         name='atfScreen'
-        component={OnlyTitleScreen({ title: 'Платежи' })}
+        component={OnlyTitleScreen({ title: 'Банкоматы' })}
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (
             <BottomIcon
-              title='Платежи'
+              title='Банкоматы'
               icon={<IconAtf color={focused ? palette.accent.secondary : palette.text.secondary} />}
               isActive={focused}
             />
