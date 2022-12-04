@@ -1,0 +1,10 @@
+export { IconStar } from './icon-star';
+export { IconAtf } from './icon-atf'
+export { IconMobile } from './icon-mobile'
+export { IconPayment } from './icon-payment'
+export { IconWallet } from './icon-wallet'
+export { IconProfile } from './icon-profile'
+export { IconHouse } from './icon-house'
+export { IconMail } from './icon-mail'
+export { IconCross } from './icon-cross'
+export { IconLock } from './icon-lock'
