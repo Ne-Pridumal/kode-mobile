@@ -16,10 +16,14 @@ const Wrapper = styled(View)`
 `
 const ImageWrapper = styled(View)`
   margin-bottom: ${({ theme }) => theme.spacing(4)}px;
-  min-width: 148px;
-  min-height: 148px;
+  width: 148px;
+  height: 148px;
   border-radius: 1000px;
   overflow: hidden;
+`
+const Img = styled(Image)`
+  width: 100%;
+  height: 100%;
 `
 const Title = styled(Typography)`
   text-align: center;
@@ -44,7 +48,7 @@ export const CompleteAuthPage = ({ buttonAction }: TCompleteAuthPage) => {
   return (
     <Wrapper>
       <ImageWrapper>
-        <Image
+        <Img
           source={require('./ok.png')}
         />
       </ImageWrapper>
