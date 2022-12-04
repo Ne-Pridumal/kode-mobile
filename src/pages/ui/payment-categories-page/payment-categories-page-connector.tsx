@@ -1,6 +1,6 @@
 import { addSnek } from '@entities/sneks';
-import { PaymentCategoriesStackParamsList } from '@features/app-navigation';
 import { $categoriesList, setCategoriesList, useGetPaymentCategories } from '@features/payment-categories';
+import { RootStackParamsList } from '@features/root-stack';
 import { setServicesList } from '@features/services';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -10,7 +10,7 @@ import { useEffect } from 'react';
 import { PaymentCategoriesScreen } from './payment-categories-page';
 
 export const PaymentCategoriesPageConnector = () => {
-  const navigation = useNavigation<NativeStackNavigationProp<PaymentCategoriesStackParamsList>>()
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamsList>>()
   const data = useStore($categoriesList)
   const { data: hookedData, isSuccess, isLoading, isError } = useGetPaymentCategories()
   useEffect(() => {
@@ -36,7 +36,9 @@ export const PaymentCategoriesPageConnector = () => {
         category_name: category.category_name,
         onPress: () => {
           setServicesList(category.services)
-          navigation.navigate('MobileServices')
+          navigation.navigate('PaymentCategories', {
+            screen: 'MobileServices'
+          })
         }
       }
     }

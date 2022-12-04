@@ -50,7 +50,10 @@ export const MobileTransactionPageConnector = () => {
     setChipsInputFocus(false)
   }
   const chipInputOnFocusAction = () => {
-    const newTransactionValue = transactionInfo.transactionValue.slice(0, -2)
+    let newTransactionValue = transactionInfo.transactionValue.slice(0, -2)
+    if(newTransactionValue === '0'){
+      newTransactionValue = ''
+    }
     setTransactionInfo({ ...transactionInfo, transactionValue: newTransactionValue })
     setChipsInputFocus(true)
   }

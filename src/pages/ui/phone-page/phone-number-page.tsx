@@ -2,18 +2,30 @@ import { IconInput, TIconInput } from '@shared/ui/core/molecules';
 import { CustomKeyboard, TCustomKeyboard } from '@shared/ui/core/organisms';
 import { CustomKeyboardInputPage } from '@shared/ui/core/pages';
 import { styled } from '@shared/ui/theme'
-import { View } from 'react-native'
+import { View, Image } from 'react-native'
 import React from 'react';
 import { BigButton } from '@shared/ui/core/atoms';
 
 const ContentWrapper = styled(View)`
   position: relative;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
   padding: 0 16px;
-  background: ${({theme}) => theme.palette.background.secondary};
+  background: ${({ theme }) => theme.palette.background.secondary};
+`
+
+const ImageWrapper = styled(View)`
+  width: 100%;
+  height: 100%;
+  max-width: 90px;
+  max-height: 101px;
+  top: 55px;
+`
+const Img = styled(Image)`
+  width: 100%;
+  height: 100%;
 `
 
 const InputWrapper = styled(View)`
@@ -22,7 +34,7 @@ const InputWrapper = styled(View)`
 `
 
 const ButtonWrapper = styled(View)`
-  position: absolute;
+  position: relative;
   width: 100%;  
   height: auto;
   justify-content: center;
@@ -47,6 +59,9 @@ export const PhoneNumberPage = ({ isHideKeyboard, keyboardProps, inputProps, but
       isHideKeyboard={isHideKeyboard}
       content={
         <ContentWrapper>
+          <ImageWrapper>
+            <Img source={require('./logo.png')} />
+          </ImageWrapper>
           <InputWrapper>
             <IconInput {...inputProps} />
           </InputWrapper>

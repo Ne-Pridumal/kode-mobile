@@ -25,7 +25,9 @@ const BeforeIconWrapper = styled(View)`
   justify-content: center;
   overflow: hidden;
 `
-const Input = styled(TextInput)`
+const Input = styled.TextInput.attrs(({ theme }) => ({
+  selectionColor: theme.palette.accent.primary
+}))`
   flex: 1;
   font-family: ${({ theme }) => theme.typography.body15Regular.fontFamily};
   font-style: normal;

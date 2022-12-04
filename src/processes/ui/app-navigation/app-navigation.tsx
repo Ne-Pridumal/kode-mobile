@@ -1,10 +1,9 @@
 import { IconAtf, IconPayment, IconProfile, IconWallet } from '@shared/ui/core/atoms/icons';
 import { BottomIcon } from '@shared/ui/core/molecules';
 import { MainTab } from '@features/app-navigation/app-navigation';
-import { PaymentCategoriesNavigation } from '../payment-categories-navigation/payment-categories-navigation';
 import { OnlyTitleScreen } from '@pages/ui/only-title-page';
 import { useTheme } from 'styled-components';
-import { OTPPageConnector, PhoneNumberPageConnector } from '@pages/ui';
+import { PaymentCategoriesPageConnector } from '@pages/ui';
 
 export const AppNavigation = () => {
   const { palette } = useTheme()
@@ -23,11 +22,12 @@ export const AppNavigation = () => {
         tabBarActiveTintColor: '#F678BA',
         tabBarInactiveTintColor: '#F678BA',
       }}
+      backBehavior='none'
     >
 
       <MainTab.Screen
         name='mainScreen'
-        component={OTPPageConnector}
+        component={OnlyTitleScreen({ title: 'Главная' })}
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (
@@ -41,7 +41,7 @@ export const AppNavigation = () => {
       />
       <MainTab.Screen
         name='paymentScreen'
-        component={PaymentCategoriesNavigation}
+        component={PaymentCategoriesPageConnector}
         options={{
           headerShown: false,
           tabBarIcon: ({ focused }) => (

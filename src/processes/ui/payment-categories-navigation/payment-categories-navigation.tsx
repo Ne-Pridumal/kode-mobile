@@ -1,18 +1,11 @@
 import { PaymentCategoriesStack } from "@features/app-navigation";
-import { ServicesPageConnector, MobileTransactionPageConnector, PaymentCategoriesPageConnector } from "@pages/ui";
+import { ServicesPageConnector, MobileTransactionPageConnector, } from "@pages/ui";
 import { useTheme } from "styled-components";
 
 export const PaymentCategoriesNavigation = () => {
   const { palette } = useTheme()
   return (
     <PaymentCategoriesStack.Navigator>
-      <PaymentCategoriesStack.Screen
-        name='Payment'
-        options={{
-          headerShown: false
-        }}
-        component={PaymentCategoriesPageConnector}
-      />
       <PaymentCategoriesStack.Screen
         name='MobileServices'
         options={{

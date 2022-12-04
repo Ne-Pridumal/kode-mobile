@@ -13,7 +13,7 @@ const Wrapper = styled(View)`
   overflow: hidden;
   height: 52px;
   flex-direction: row;
-  background: ${({theme}) => theme.palette.content.secondary};
+  background: ${({ theme }) => theme.palette.content.secondary};
   border-radius: 26px;
   align-items: center;
   padding: 14px 16px 14px 24px;
@@ -33,6 +33,7 @@ const CustomInput = styled.TextInput.attrs(
     placeholderTextColor: isWrongNumber
       ? theme.palette.content.error
       : theme.palette.content.primary,
+    selectionColor: theme.palette.accent.primary
   })
 ) <TCustomInput>`
   color: ${({ theme, isWrongNumber }: TCustomInput) => (
@@ -44,6 +45,7 @@ const CustomInput = styled.TextInput.attrs(
   letter-spacing: ${({ theme }) => theme.typography.body15Regular.letterSpacing};
   font-size: ${({ theme }) => theme.typography.body15Regular.size};
   flex: 1;
+  
 `
 
 export type TPhoneInput = TextInputProps & {
@@ -61,10 +63,10 @@ export const PhoneInput = ({ icon, onPress, value, isWrongNumber, ...inputProps 
       </IconWrapper>
       <Gap />
       <CustomInput
-        {...inputProps}
         value={number}
         keyboardType='number-pad'
         isWrongNumber={isWrongNumber}
+        {...inputProps}
       />
       {value && (
         <>

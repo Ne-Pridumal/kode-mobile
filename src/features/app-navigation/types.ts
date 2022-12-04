@@ -7,7 +7,6 @@ export type AppTabsParamsList = {
   profileScreen: undefined
 }
 export type PaymentCategoriesStackParamsList = {
-  Payment: undefined,
   MobileServices: undefined,
   MobileTransaction: TServiceModel,
 }

@@ -37,6 +37,8 @@ export const PasswordPageConnector = () => {
     )
   )
   const buttonAction = () => {
+    const reg = /^([\wА-Яа-я]+$)/i
+
     if (inputValue.length < 5) {
       addSnek({
         id: Date.now(),
@@ -44,11 +46,19 @@ export const PasswordPageConnector = () => {
         type: 'alarm',
         timer: 5000,
       })
+      return
     }
-    else {
+    if (!inputValue.match(reg)) {
+      addSnek({
+        id: Date.now(),
+        title: 'Пароль может содержать только цифры и буквы',
+        type: 'alarm',
+        timer: 5000,
+      })
+      return
+    }
 
-      navigation.navigate('Complete')
-    }
+    navigation.navigate('Complete')
   }
 
   return (

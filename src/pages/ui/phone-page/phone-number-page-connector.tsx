@@ -1,5 +1,5 @@
 import { IconMobile } from '@shared/ui/core/atoms/icons';
-import React, {  useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { PhoneNumberPage } from './phone-number-page';
 import { ActivityIndicator } from 'react-native'
 import { mask, unMask } from 'react-native-mask-text';
@@ -8,7 +8,7 @@ import { addSnek } from '@entities/sneks';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
 import { AuthStackParamsList } from '@features/auth-navigation/types';
-import { useGetOTPCode } from '@entities/user-info';
+import { setUserOtpAndPhone, useGetOTPCode } from '@entities/user-info';
 
 export const PhoneNumberPageConnector = () => {
   const navigation = useNavigation<NativeStackNavigationProp<AuthStackParamsList>>()
@@ -27,15 +27,18 @@ export const PhoneNumberPageConnector = () => {
       setIsRightNumber(false)
     }
   }, [keyboardState])
+
   useEffect(() => {
-    if(isSuccess){
+    if (isSuccess) {
       const phone = '+' + unMask(keyboardState)
-      navigation.navigate('OTP', {
-        otp: data.otpCode,
+      setUserOtpAndPhone({
         phone: phone,
+        otpCode: data.otpCode
       })
+      navigation.navigate('OTP')
     }
-  }, [isError, isSuccess,data])
+  }, [isError, isSuccess, data])
+
   const buttonAction = () => {
     if (!isRightNumber) {
       addSnek({
@@ -54,16 +57,18 @@ export const PhoneNumberPageConnector = () => {
     <PhoneNumberPage
       keyboardProps={{
         keyboardChangeEffect: setKeyboardState,
-        type: 'numeric',
         onPressNumber: () => null,
-        customButtonAction: () => { setIsHideKeyboard(true) }
+        customButtonAction: () => { setIsHideKeyboard(true) },
       }}
       inputProps={{
         inputProps: {
           value: maskedVal,
           showSoftInputOnFocus: false,
           onPressIn: () => { setIsHideKeyboard(false) },
-          onBlur: () => { setIsHideKeyboard(true) }
+          onBlur: () => { setIsHideKeyboard(true) },
+          selectTextOnFocus: false,
+          editable: isHideKeyboard,
+          style: { color: palette.text.primary }
         },
         beforeIcon: <IconMobile />,
         afterIcon: isLoading && !isSuccess && <ActivityIndicator size={'small'} color={palette.accent.primary} />

@@ -1,9 +1,6 @@
 export type AuthStackParamsList = {
   Phone: undefined,
-  OTP: {
-    phone: string,
-    otp: string,
-  },
+  OTP: undefined,
   Password: undefined,
   Complete: undefined,
   Error: undefined

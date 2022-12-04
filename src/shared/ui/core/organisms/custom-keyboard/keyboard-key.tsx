@@ -72,9 +72,9 @@ const KeyboardKeyComponent = ({ keyContent, isCustomKey, customKeyAction, keyAct
 
 
 const areEqual = (prevProps: TKeyboardKey, nextProps: TKeyboardKey) => {
-  if (prevProps.keyContent === nextProps.keyContent
-    || prevProps.customKeyAction === nextProps.customKeyAction
-    || prevProps.keyAction === nextProps.customKeyAction
+  if (prevProps.keyContent === nextProps.keyContent &&
+    (prevProps.customKeyAction === nextProps.customKeyAction
+      || prevProps.keyAction === nextProps.customKeyAction)
   ) {
     return true
   }

@@ -8,9 +8,9 @@ import { styled } from '@shared/ui/theme';
 import { Storybook } from '../../../.storybook';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { AppThemeProvider } from '@app/theme-provider';
-import { AppNavigation, AuthNavigation } from '@processes/index';
 import { SnekProvider } from '@app/snek-provider';
 import { QueryClientProvider, QueryClient } from 'react-query'
+import { RootStackProvider } from '@app/root-stack-provider';
 
 const queryClient = new QueryClient()
 
@@ -60,7 +60,7 @@ export const App = () => {
         <SafeAreaProvider>
           <SnekProvider>
             <NavigationContainer>
-              <AuthNavigation />
+              <RootStackProvider />
             </NavigationContainer>
           </SnekProvider>
         </SafeAreaProvider>

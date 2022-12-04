@@ -1,5 +1,5 @@
 import { AuthStack } from '@features/auth-navigation';
-import { CompleteAuthPageConnector, OTPPageConnector, PhoneNumberPageConnector } from '@pages/ui';
+import { AuthErrorPageConnector, CompleteAuthPageConnector, OTPPageConnector, PhoneNumberPageConnector } from '@pages/ui';
 import { PasswordPageConnector } from '@pages/ui/password-page';
 import React from 'react';
 
@@ -21,6 +21,10 @@ export const AuthNavigation = () => {
       <AuthStack.Screen
         name='Complete'
         component={CompleteAuthPageConnector}
+        />
+      <AuthStack.Screen
+        name='Error'
+        component={AuthErrorPageConnector}
         />
     </AuthStack.Navigator>
   );

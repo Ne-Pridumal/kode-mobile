@@ -31,17 +31,17 @@ const numericArrary = [
 export type TCustomKeyboard = {
   onPressNumber?: (e: GestureResponderEvent) => void,
   keyboardChangeEffect: Dispatch<SetStateAction<string>>,
-  type: 'numeric' | 'custom-numeric' | 'custom-keyboard'
-  keyboardArray?: TKeyboardArray,
   customButtonAction: () => void
   customButtonContent?: string
 }
 
-const CustomKeyboardComponent = ({ onPressNumber, keyboardChangeEffect, customButtonAction, customButtonContent }: TCustomKeyboard) => {
+const CustomKeyboardComponent = ({ onPressNumber, keyboardChangeEffect, customButtonAction, customButtonContent, }: TCustomKeyboard) => {
   const addKeyAction = (e: GestureResponderEvent, key: ReactNode) => {
     const keyType = typeof key
     if (keyType === 'number' || keyType === 'string') {
-      keyboardChangeEffect(state => state + `${key}`)
+      keyboardChangeEffect(state => {
+        return state + `${key}`
+      })
     }
     if (key === DelIcon) {
       keyboardChangeEffect((state) => state.slice(0, -1))
@@ -57,9 +57,9 @@ const CustomKeyboardComponent = ({ onPressNumber, keyboardChangeEffect, customBu
               keyAction={addKeyAction}
               isCustomKey={`${rowIndex}${keyIndex}` === '30' ? true : false}
               keyContent={
-              `${rowIndex}${keyIndex}` === '30' 
-                ? customButtonContent ? customButtonContent : key 
-                : key}
+                `${rowIndex}${keyIndex}` === '30'
+                  ? customButtonContent ? customButtonContent : key
+                  : key}
               customKeyAction={customButtonAction}
             />
           ))}
@@ -70,10 +70,9 @@ const CustomKeyboardComponent = ({ onPressNumber, keyboardChangeEffect, customBu
 };
 
 const areEqual = (prevProps: TCustomKeyboard, nextProps: TCustomKeyboard) => {
-  if (prevProps.keyboardChangeEffect === nextProps.keyboardChangeEffect
+  if ((prevProps.keyboardChangeEffect === nextProps.keyboardChangeEffect
     || prevProps.customButtonAction === nextProps.customButtonAction
-    || prevProps.customButtonContent === nextProps.customButtonContent
-  ) {
+  ) && prevProps.customButtonContent === nextProps.customButtonContent) {
     return true
   }
   return false

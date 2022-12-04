@@ -8,7 +8,9 @@ const Wrapper = styled(View)`
   align-items: center;
   height: 64px;
 `
-const BigInput = styled(TextInput)`
+const BigInput = styled.TextInput.attrs(({ theme }) => ({
+  selectionColor: theme.palette.accent.primary
+}))`
   width: 100%;
   align-self: flex-start;
   font-family: ${({ theme }) => theme.typography.title.fontFamily};
@@ -22,15 +24,15 @@ type TLine = {
   underlineColor: 'alarm' | 'focused',
 }
 
-const Line = styled(View)<TLine>`
+const Line = styled(View) <TLine>`
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 1px;
   background: ${({ theme, underlineColor }: TLine) => (
-    underlineColor === 'alarm' 
-    ? theme.palette.text.secondary
-    : theme.palette.accent.primary)};
+    underlineColor === 'alarm'
+      ? theme.palette.text.secondary
+      : theme.palette.accent.primary)};
 `
 
 
@@ -41,7 +43,9 @@ export type TUnderlineInput = TextInputProps & {
 export const UnderlineInput = ({ underlineColor, value, ...inputProps }: TUnderlineInput) => {
   return (
     <Wrapper>
-      <BigInput value={value} {...inputProps} />
+      <BigInput
+        value={value}
+        {...inputProps} />
       <Line underlineColor={underlineColor} />
     </Wrapper>
   );
