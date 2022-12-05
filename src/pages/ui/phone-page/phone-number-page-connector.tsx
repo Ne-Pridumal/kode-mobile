@@ -4,7 +4,7 @@ import { PhoneNumberPage } from './phone-number-page';
 import { ActivityIndicator } from 'react-native'
 import { mask, unMask } from 'react-native-mask-text';
 import { useTheme } from 'styled-components';
-import { addSnek } from '@entities/sneks';
+import { addSnek, removeSnek } from '@entities/sneks';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack/lib/typescript/src/types';
 import { AuthStackParamsList } from '@features/auth-navigation/types';
@@ -16,16 +16,18 @@ export const PhoneNumberPageConnector = () => {
   const [keyboardState, setKeyboardState] = useState<string>('')
   const [isHideKeyboard, setIsHideKeyboard] = useState<boolean>(true)
   const [isRightNumber, setIsRightNumber] = useState<boolean>(false)
+  const [isAlarm, setIsAlam] = useState(false)
   const maskedVal = mask(keyboardState, '+7 (999) 999 99 99')
   const { isLoading, data, isSuccess, isError, mutateAsync: getOtpCode } = useGetOTPCode()
   useEffect(() => {
-    if (keyboardState.length >= 10) {
+    if (maskedVal.length >= 18) {
       setKeyboardState(maskedVal)
       setIsRightNumber(true)
     }
     else {
       setIsRightNumber(false)
     }
+    setIsAlam(false)
   }, [keyboardState])
 
   useEffect(() => {
@@ -44,15 +46,18 @@ export const PhoneNumberPageConnector = () => {
   }, [isError, isSuccess, data])
 
   const buttonAction = () => {
+    const snekId = Date.now()
     if (!isRightNumber) {
       addSnek({
-        id: Date.now(),
+        id: snekId,
         timer: 5000,
         title: 'Пожалуйста, убедитесь, что вы правильно ввели номер телефона',
         type: 'alarm',
       })
+      setIsAlam(true)
       return
     }
+    removeSnek({ title: 'Пожалуйста, убедитесь, что вы правильно ввели номер телефона' })
     const phone = '+' + unMask(keyboardState)
     getOtpCode(phone)
   }
@@ -72,9 +77,9 @@ export const PhoneNumberPageConnector = () => {
           onBlur: () => { setIsHideKeyboard(true) },
           selectTextOnFocus: false,
           editable: isHideKeyboard,
-          style: { color: palette.text.primary }
+          style: { color: isAlarm ? '#FB6176' : palette.text.primary }
         },
-        beforeIcon: <IconMobile />,
+        beforeIcon: <IconMobile color={isAlarm ? '#FB6176' : '#6C78E6'} />,
         afterIcon: isLoading && !isSuccess && <ActivityIndicator size={'small'} color={palette.accent.primary} />
       }}
       buttonAction={buttonAction}

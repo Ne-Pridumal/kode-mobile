@@ -7,7 +7,7 @@ type TSnek = Omit<TAlertPopUp, 'closeAction'> & {
   timer: number
 }
 type TRemoveActionProps = {
-  id: number
+  title: string
 }
 
 export const addSnek = createEvent<TSnek>();
@@ -28,14 +28,14 @@ $sneksList.on(addSnek, (state, payload) => {
   return [...newState]
 })
 
-$sneksList.on(removeSnek, (state, payload) => (state.filter(snek => snek.id !== payload.id)))
+$sneksList.on(removeSnek, (state, payload) => (state.filter(snek => snek.title !== payload.title)))
 
 addSnek.watch((snek) => {
   return setTimeout(() => {
-    const state = useStore($sneksList)
-    const snekIndex = state.find(sSnek => sSnek.id === snek.id)?.id
+    const state = $sneksList.getState()
+    const snekIndex = state.find(sSnek => sSnek.title === snek.title)?.title
     if (snekIndex) {
-      removeSnek({ id: snekIndex })
+      removeSnek({ title: snekIndex })
     }
   }, snek.timer)
 })

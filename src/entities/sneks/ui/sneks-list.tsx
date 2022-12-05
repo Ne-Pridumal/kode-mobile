@@ -14,7 +14,7 @@ export const SneksList = () => {
           <AlertPopUp
             type={snek.type}
             title={snek.title}
-            closeAction={() => removeSnek({ id: snek.id })}
+            closeAction={() => removeSnek({ title: snek.title })}
           />
           <View style={{ height: 6, width: '100%' }} />
         </View>
